@@ -16,9 +16,10 @@
 
 ---
 
+
 ## Overview
 
-AgentHub is your central command center for AI agent workflows in VS Code. It auto-initializes a complete agent workspace with slash commands, reusable skills, and configurable rules enforcement on first activation.
+AgentHub is a rules enforcement engine for VS Code. It auto-initializes a `.agent/` workspace structure and provides powerful, configurable linting and enforcement for your codebase using YAML, JSON, or Markdown rules.
 
 **Built by [BuildWorks.AI](https://buildworks.ai)** — creators of [SARAISE](https://github.com/buildworksai/saraise) (AI-Enabled ERP) and [AISTRALE](https://github.com/buildworksai/aistrale) (LLM Engineering Platform).
 
@@ -26,41 +27,23 @@ AgentHub is your central command center for AI agent workflows in VS Code. It au
 
 ### 🚀 Auto-Initialize Agent Workspace
 - **One-click setup**: Automatically creates `.agent/` structure on first activation
-- **Example commands**: Pre-configured approval, review, and investigation commands
-- **Example skills**: React best practices, testing patterns, security audit
+- **Example rules**: Pre-configured linting rules for best practices
 - **Comprehensive documentation**: Auto-generated `.agent/README.md` explaining structure
 
-### ⚡ Slash Commands & @file Tokens
-- **Chat view supports**: `/command` and `@file` tokens **anywhere in your prompt** (not just at the start)
-- **Resolution is post-submit**: Tokens are parsed and resolved **after you submit** your message. No live picker/autocomplete in the chat textbox.
-- **Quick access**: Press `Cmd+/` (Mac) or `Ctrl+/` (Windows/Linux) for command picker (webview/editor only)
-- **Browse commands**: Visual menu showing all available `.agent/commands/*.md` files
-- **Instant use**: Command content copied to clipboard for pasting in AI chat
-- **Edit mode**: Quick access to open and customize command files
-### 📝 Chat Token Usage & Behavior
-
-- **@token**: Use `@filename` or `@partialName` anywhere in your prompt. After submit, the extension will resolve the token to a file path:
-  - If 0 matches: error, prompt lists unresolved tokens
-  - If >1 matches: error, prompt lists ambiguous matches for disambiguation
-  - If exactly 1 match: prompt is rewritten to use `@relative/path` (and file content may be included as context)
-- **/command**: Use `/commandName` anywhere in your prompt. The last occurrence is used. If it matches a `.agent/commands/*.md` file, that command is loaded as context.
-- **No live picker**: Autocomplete and live suggestions are only available in the webview/editor, **not** in the Copilot Chat textbox.
-
-**Examples:**
-
-```
-@agenthub /review please check @webviewChatPanel and explain
-```
-
-```
-@agenthub please do X /approval @someFile
-```
-
-**Behavior:**
-- `/command` and `@token` can appear anywhere in your prompt
-- All resolution is post-submit (after you send the message)
-- Ambiguous or missing @tokens will block execution and prompt for clarification
-- No regressions to existing /command behavior
+### 📋 Rule Enforcement
+- **Rule source**: Reads rules from `.agent/rules` directory (supports nested folders)
+- **Multiple formats**: YAML, JSON, Markdown, and plain text rule files
+- **Real-time linting**: Diagnostics on document open, save, and change (configurable debounce)
+- **Quick fixes**: Automated fixes where rules define them
+- **Save blocking**: Block file saves when errors/warnings exist (configurable)
+- **Build integration**: CLI script for CI/CD pipelines and pre-commit hooks
+- **Strict mode**: Multiple enforcement levels from passive to draconian
+- **Status bar**: Shows current enforcement mode at a glance
+- **Path filtering**: Include/exclude patterns using minimatch globs
+- **Language filtering**: Target specific programming languages
+- **Workspace scanning**: Command to scan entire workspace for violations
+- **Auto-reload**: Watches `.agent/rules/**` and reloads on changes
+- **Fully configurable**: All features can be enabled/disabled via settings
 
 ### 📋 Rule Enforcement
 - **Rule source**: Reads rules from `.agent/rules` directory (supports nested folders)
@@ -96,15 +79,7 @@ When you first activate the extension, it automatically creates:
 └── README.md          # Complete documentation
 ```
 
-### 2. Use Slash Commands
 
-Press `Cmd+/` (or `Ctrl+/`) to open the command picker. Select a command to copy it to your clipboard, then paste in your AI agent chat (GitHub Copilot, Cursor, Claude, etc.).
-
-**Example: Code Review**
-1. Press `Cmd+/`
-2. Select "review"
-3. Paste in chat
-4. Agent performs comprehensive architectural review
 
 ### 3. Define Rules
 
@@ -219,6 +194,7 @@ error: No console.error allowed :: console\\.error\\(
 warn: Avoid var keyword :: \\bvar\\b
 info: Consider using template literals :: '.*\\+.*'
 ```
+
 
 ## Commands
 
@@ -367,9 +343,10 @@ fix:
 - VS Code 1.107.0 or higher
 - Node.js (for development)
 
+
 ## Extension Settings
 
-This extension does not contribute any VS Code settings. All configuration is done via `.agent/rules` files.
+All configuration is done via `.agent/rules` files and the `agentRules.*` settings in your workspace settings. See the Configuration section above for details.
 
 ## Known Issues
 
@@ -432,5 +409,6 @@ Licensed under the Apache License, Version 2.0. This is part of BuildWorks.AI's 
 
 ---
 
-**Power your AI agent workflows with AgentHub by BuildWorks.AI!**
+
+**Enforce your code quality and compliance with AgentHub by BuildWorks.AI!**
 
