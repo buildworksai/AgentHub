@@ -30,11 +30,37 @@ AgentHub is your central command center for AI agent workflows in VS Code. It au
 - **Example skills**: React best practices, testing patterns, security audit
 - **Comprehensive documentation**: Auto-generated `.agent/README.md` explaining structure
 
-### ⚡ Slash Commands
-- **Quick access**: Press `Cmd+/` (Mac) or `Ctrl+/` (Windows/Linux) for command picker
+### ⚡ Slash Commands & @file Tokens
+- **Chat view supports**: `/command` and `@file` tokens **anywhere in your prompt** (not just at the start)
+- **Resolution is post-submit**: Tokens are parsed and resolved **after you submit** your message. No live picker/autocomplete in the chat textbox.
+- **Quick access**: Press `Cmd+/` (Mac) or `Ctrl+/` (Windows/Linux) for command picker (webview/editor only)
 - **Browse commands**: Visual menu showing all available `.agent/commands/*.md` files
 - **Instant use**: Command content copied to clipboard for pasting in AI chat
 - **Edit mode**: Quick access to open and customize command files
+### 📝 Chat Token Usage & Behavior
+
+- **@token**: Use `@filename` or `@partialName` anywhere in your prompt. After submit, the extension will resolve the token to a file path:
+  - If 0 matches: error, prompt lists unresolved tokens
+  - If >1 matches: error, prompt lists ambiguous matches for disambiguation
+  - If exactly 1 match: prompt is rewritten to use `@relative/path` (and file content may be included as context)
+- **/command**: Use `/commandName` anywhere in your prompt. The last occurrence is used. If it matches a `.agent/commands/*.md` file, that command is loaded as context.
+- **No live picker**: Autocomplete and live suggestions are only available in the webview/editor, **not** in the Copilot Chat textbox.
+
+**Examples:**
+
+```
+@agenthub /review please check @webviewChatPanel and explain
+```
+
+```
+@agenthub please do X /approval @someFile
+```
+
+**Behavior:**
+- `/command` and `@token` can appear anywhere in your prompt
+- All resolution is post-submit (after you send the message)
+- Ambiguous or missing @tokens will block execution and prompt for clarification
+- No regressions to existing /command behavior
 
 ### 📋 Rule Enforcement
 - **Rule source**: Reads rules from `.agent/rules` directory (supports nested folders)
