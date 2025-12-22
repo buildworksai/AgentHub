@@ -5,11 +5,7 @@ import { RulesLoader } from './rulesLoader';
 import { Linter } from './linter';
 import { AgentRulesCodeActionProvider } from './actions';
 import { initializeAgentStructure } from './agentStructure';
-import { registerChatParticipant } from './chatParticipant';
 
-import { showFileFolderQuickPick } from './quickPickFileFolder';
-
-import { WebviewChatPanel } from './webviewChatPanel';
 
 const outputChannel: vscode.OutputChannel = vscode.window.createOutputChannel('AgentHub');
 let rulesLoader: RulesLoader;
@@ -27,26 +23,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	outputChannel.appendLine('═══════════════════════════════════════════════════════');
 	outputChannel.appendLine('Activating...');
 
-	// Register Copilot Chat participant
-	registerChatParticipant(context);
-	outputChannel.appendLine('✓ Chat participant registered');
 
-	// Register command to open custom chat webview
-	context.subscriptions.push(
-		vscode.commands.registerCommand('agentHub.openChatWebview', () => {
-			WebviewChatPanel.createOrShow(context.extensionUri);
-		})
-	);
-
-	// Register test command for file/folder QuickPick
-	context.subscriptions.push(
-		vscode.commands.registerCommand('agentHub.pickFileOrFolder', async () => {
-			const picked = await showFileFolderQuickPick();
-			if (picked) {
-				vscode.window.showInformationMessage(`Selected: ${picked.fsPath}`);
-			}
-		})
-	);
 
 	// Create status bar item
 	statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
