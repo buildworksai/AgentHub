@@ -1,0 +1,199 @@
+{
+  "name": "agenthub",
+  "displayName": "AgentHub",
+  "description": "Your AI agent command center for VS Code. Auto-initialized workspace with commands, skills, and rules enforcement. Part of BuildWorks.AI's enterprise AI tooling ecosystem.",
+  "version": "0.3.0",
+  "publisher": "BuildWorksAI",
+  "author": {
+    "name": "BuildWorks.AI",
+    "email": "info@buildworks.ai",
+    "url": "https://buildworks.ai"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/buildworksai/agenthub"
+  },
+  "bugs": {
+    "url": "https://github.com/buildworksai/agenthub/issues",
+    "email": "info@buildworks.ai"
+  },
+  "homepage": "https://buildworks.ai",
+  "engines": {
+    "vscode": "^1.107.0"
+  },
+  "categories": [
+    "Linters",
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "agent",
+    "rules",
+    "linter",
+    "ai",
+    "buildworks",
+    "automation",
+    "code-quality",
+    "agent-workspace",
+    "slash-commands"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onLanguageModelAccess:*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "agentRules.scanWorkspace",
+        "title": "AgentHub: Scan Workspace"
+      },
+      {
+        "command": "agentRules.openRulesFolder",
+        "title": "AgentHub: Open Rules Folder"
+      },
+      {
+        "command": "agentRules.slashCommand",
+        "title": "Agent: Execute Slash Command"
+      },
+      {
+        "command": "agentRules.enableStrictMode",
+        "title": "AgentHub: Enable Strict Mode"
+      },
+      {
+        "command": "agentRules.disableStrictMode",
+        "title": "AgentHub: Disable Strict Mode"
+      },
+      {
+        "command": "agentRules.toggleSaveBlocking",
+        "title": "AgentHub: Toggle Save Blocking"
+      },
+      {
+        "command": "agentRules.temporarilyDisable",
+        "title": "AgentHub: Temporarily Disable (This Session)"
+      }
+    ],
+    "chatParticipants": [
+      {
+        "id": "agenthub.agent",
+        "name": "agent",
+        "description": "AgentHub AI Agent Command Center",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "approval",
+            "description": "Application Architect & Implementation approval command"
+          },
+          {
+            "name": "review",
+            "description": "Comprehensive code review with architectural validation"
+          },
+          {
+            "name": "investigate",
+            "description": "Root cause analysis and debugging investigation"
+          },
+          {
+            "name": "role",
+            "description": "Load ruthless mentor architect role"
+          }
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "Agent Rules Enforcer",
+      "properties": {
+        "agentRules.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/disable the Agent Rules extension"
+        },
+        "agentRules.blockSaveOnErrors": {
+          "type": "boolean",
+          "default": false,
+          "description": "Block file saves when agent-rules errors are present"
+        },
+        "agentRules.blockSaveOnWarnings": {
+          "type": "boolean",
+          "default": false,
+          "description": "Block file saves when agent-rules warnings are present"
+        },
+        "agentRules.allowSaveOverride": {
+          "type": "boolean",
+          "default": true,
+          "description": "Allow users to override save blocking"
+        },
+        "agentRules.requireOverrideReason": {
+          "type": "boolean",
+          "default": false,
+          "description": "Require a reason when overriding save blocking"
+        },
+        "agentRules.failBuildOnErrors": {
+          "type": "boolean",
+          "default": false,
+          "description": "Fail build tasks when agent-rules errors are present"
+        },
+        "agentRules.failBuildOnWarnings": {
+          "type": "boolean",
+          "default": false,
+          "description": "Fail build tasks when agent-rules warnings are present"
+        },
+        "agentRules.autoFix": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically apply fixes on save (when available)"
+        },
+        "agentRules.debounceMs": {
+          "type": "number",
+          "default": 250,
+          "description": "Delay in milliseconds before linting after typing"
+        },
+        "agentRules.rulesPath": {
+          "type": "string",
+          "default": ".agent/rules",
+          "description": "Path to rules directory relative to workspace root"
+        },
+        "agentRules.maxFilesToScan": {
+          "type": "number",
+          "default": 2000,
+          "description": "Maximum number of files to scan in workspace scan"
+        },
+        "agentRules.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show enforcement mode in status bar"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "agentRules.slashCommand",
+        "key": "ctrl+/",
+        "mac": "cmd+/",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "check-rules": "node scripts/check-rules.js"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.107.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1"
+  },
+  "dependencies": {
+    "minimatch": "^9.0.5",
+    "yaml": "^2.8.2"
+  }
+}
