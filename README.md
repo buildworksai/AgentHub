@@ -16,10 +16,9 @@
 
 ---
 
-
 ## Overview
 
-AgentHub is a rules enforcement engine for VS Code. It auto-initializes a `.agent/` workspace structure and provides powerful, configurable linting and enforcement for your codebase using YAML, JSON, or Markdown rules.
+AgentHub is your central command center for AI agent workflows in VS Code. It auto-initializes a complete agent workspace with slash commands, reusable skills, and configurable rules enforcement on first activation.
 
 **Built by [BuildWorks.AI](https://buildworks.ai)** — creators of [SARAISE](https://github.com/buildworksai/saraise) (AI-Enabled ERP) and [AISTRALE](https://github.com/buildworksai/aistrale) (LLM Engineering Platform).
 
@@ -27,23 +26,15 @@ AgentHub is a rules enforcement engine for VS Code. It auto-initializes a `.agen
 
 ### 🚀 Auto-Initialize Agent Workspace
 - **One-click setup**: Automatically creates `.agent/` structure on first activation
-- **Example rules**: Pre-configured linting rules for best practices
+- **Example commands**: Pre-configured approval, review, and investigation commands
+- **Example skills**: React best practices, testing patterns, security audit
 - **Comprehensive documentation**: Auto-generated `.agent/README.md` explaining structure
 
-### 📋 Rule Enforcement
-- **Rule source**: Reads rules from `.agent/rules` directory (supports nested folders)
-- **Multiple formats**: YAML, JSON, Markdown, and plain text rule files
-- **Real-time linting**: Diagnostics on document open, save, and change (configurable debounce)
-- **Quick fixes**: Automated fixes where rules define them
-- **Save blocking**: Block file saves when errors/warnings exist (configurable)
-- **Build integration**: CLI script for CI/CD pipelines and pre-commit hooks
-- **Strict mode**: Multiple enforcement levels from passive to draconian
-- **Status bar**: Shows current enforcement mode at a glance
-- **Path filtering**: Include/exclude patterns using minimatch globs
-- **Language filtering**: Target specific programming languages
-- **Workspace scanning**: Command to scan entire workspace for violations
-- **Auto-reload**: Watches `.agent/rules/**` and reloads on changes
-- **Fully configurable**: All features can be enabled/disabled via settings
+### ⚡ Slash Commands
+- **Quick access**: Press `Cmd+/` (Mac) or `Ctrl+/` (Windows/Linux) for command picker
+- **Browse commands**: Visual menu showing all available `.agent/commands/*.md` files
+- **Instant use**: Command content copied to clipboard for pasting in AI chat
+- **Edit mode**: Quick access to open and customize command files
 
 ### 📋 Rule Enforcement
 - **Rule source**: Reads rules from `.agent/rules` directory (supports nested folders)
@@ -79,7 +70,15 @@ When you first activate the extension, it automatically creates:
 └── README.md          # Complete documentation
 ```
 
+### 2. Use Slash Commands
 
+Press `Cmd+/` (or `Ctrl+/`) to open the command picker. Select a command to copy it to your clipboard, then paste in your AI agent chat (GitHub Copilot, Cursor, Claude, etc.).
+
+**Example: Code Review**
+1. Press `Cmd+/`
+2. Select "review"
+3. Paste in chat
+4. Agent performs comprehensive architectural review
 
 ### 3. Define Rules
 
@@ -194,7 +193,6 @@ error: No console.error allowed :: console\\.error\\(
 warn: Avoid var keyword :: \\bvar\\b
 info: Consider using template literals :: '.*\\+.*'
 ```
-
 
 ## Commands
 
@@ -343,10 +341,9 @@ fix:
 - VS Code 1.107.0 or higher
 - Node.js (for development)
 
-
 ## Extension Settings
 
-All configuration is done via `.agent/rules` files and the `agentRules.*` settings in your workspace settings. See the Configuration section above for details.
+This extension does not contribute any VS Code settings. All configuration is done via `.agent/rules` files.
 
 ## Known Issues
 
@@ -409,6 +406,5 @@ Licensed under the Apache License, Version 2.0. This is part of BuildWorks.AI's 
 
 ---
 
-
-**Enforce your code quality and compliance with AgentHub by BuildWorks.AI!**
+**Power your AI agent workflows with AgentHub by BuildWorks.AI!**
 

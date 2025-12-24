@@ -5,17 +5,18 @@ import { RulesLoader } from './rulesLoader';
 import { Linter } from './linter';
 import { AgentRulesCodeActionProvider } from './actions';
 import { initializeAgentStructure } from './agentStructure';
+import { registerChatParticipant } from './chatParticipant';
 
-
-const outputChannel: vscode.OutputChannel = vscode.window.createOutputChannel('AgentHub');
+let outputChannel: vscode.OutputChannel;
 let rulesLoader: RulesLoader;
 let linter: Linter;
 let rulesWatcher: vscode.FileSystemWatcher | undefined;
-const changeDebounceTimers = new Map<string, NodeJS.Timeout>();
+let changeDebounceTimers = new Map<string, NodeJS.Timeout>();
 let statusBarItem: vscode.StatusBarItem;
 let temporarilyDisabled = false;
 
 export async function activate(context: vscode.ExtensionContext) {
+	outputChannel = vscode.window.createOutputChannel('AgentHub');
 	outputChannel.appendLine('═══════════════════════════════════════════════════════');
 	outputChannel.appendLine('  AgentHub by BuildWorks.AI');
 	outputChannel.appendLine('  Your AI Agent Command Center for VS Code');
@@ -23,7 +24,9 @@ export async function activate(context: vscode.ExtensionContext) {
 	outputChannel.appendLine('═══════════════════════════════════════════════════════');
 	outputChannel.appendLine('Activating...');
 
-
+	// Register Copilot Chat participant
+	registerChatParticipant(context);
+	outputChannel.appendLine('✓ Chat participant registered');
 
 	// Create status bar item
 	statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
